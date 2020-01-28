@@ -1,0 +1,25 @@
+{
+  "name": "imagesrc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon server",
+    "client": "npm start --prefix imagefinder",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "concurrently": "^5.0.2",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.0",
+    "unsplash-js": "^6.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
