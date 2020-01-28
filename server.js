@@ -116,4 +116,17 @@ app.get("/giphy/", (req, res) => {
     .catch(err => console.log(err));
 });
 
+
+
+
+
+
+app.get("/api/photos/", (req, res) => {
+  console.log(req.query);
+  unsplash.photos
+    .listPhotos(req.query.page, req.query.per_page, "latest")
+    .then(toJson)
+    .then(json => res.json(json));
+});
+
 app.listen(PORT, () => console.log(`Listening to port ${PORT}`));
