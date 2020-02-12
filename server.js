@@ -13,12 +13,12 @@ const unsplash = new Unsplash({
 const app = express();
 app.use(cors());
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.get("/pixabay/", (req, res) => {
   const key = "14838845-97aff471166809fe19bd2c3a9";
   Axios.get(
-    `https://pixabay.com/api/?key=${key}&q=${req.query.q}&image_type=photo&per_page=${req.query.hits}`
+    `https://pixabay.com/api/?key=${key}&q=${req.query.q}&image_type=photo&per_page=${req.query.hits}&page=${req.query.page}`
   )
     .then(r => {
       res.json(r.data.hits);
@@ -31,7 +31,7 @@ app.get("/pixabay/", (req, res) => {
 app.get("/unsplash/", (req, res) => {
   req.query.q.trim().length
     ? unsplash.search
-        .photos(req.query.q, 1, req.query.hits)
+        .photos(req.query.q, req.query.page, req.query.hits)
         .then(toJson)
         .then(r =>
           res.json(
@@ -115,11 +115,6 @@ app.get("/giphy/", (req, res) => {
     )
     .catch(err => console.log(err));
 });
-
-
-
-
-
 
 app.get("/api/photos/", (req, res) => {
   console.log(req.query);
