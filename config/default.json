@@ -1,0 +1,4 @@
+{
+  "jwt_key": "jwt_private_key",
+  "atlas_key": "mongodb+srv://nandankmr:sherlock@cluster0-bnrcv.mongodb.net/test?retryWrites=true&w=majority"
+}
