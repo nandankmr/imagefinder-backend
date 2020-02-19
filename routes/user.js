@@ -26,7 +26,7 @@ router.post("/register", (req, res) => {
             console.log(token);
             res.json({
               token,
-              user: { name, email, favorites: newUser.favorites }
+              user: { name, email, favorites: newUser.favorites.map(v => v.id) }
             });
           });
       });
@@ -37,7 +37,7 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   ImageUser.findOne({ email }, (err, data) => {
-    console.log(err);
+    if (err) console.log(err);
 
     if (!data) res.status(400).json({ msg: "User does not exist." });
     else {
@@ -50,7 +50,11 @@ router.post("/login", (req, res) => {
           );
           res.json({
             token,
-            user: { email, name: data.name, favorites: data.favorites }
+            user: {
+              email,
+              name: data.name,
+              favorites: data.favorites.map(v => v.id)
+            }
           });
         } else res.status(400).json({ msg: "Invalid credentials" });
       });
@@ -59,15 +63,21 @@ router.post("/login", (req, res) => {
 });
 
 router.put("/addfavorite", auth, (req, res) => {
-  console.log(req.body);
   ImageUser.findById(req.user.id, (err, data) => {
     data.favorites = [req.body, ...data.favorites];
-    data.save().then(doc => res.json(doc));
+    data.save().then(doc => res.json(req.body.id));
   });
 });
 
 router.get("/profile", auth, (req, res) => {
   res.json({ user: req.user });
+});
+
+router.put("/removefavorite", auth, (req, res) => {
+  ImageUser.findById(req.user.id, (err, data) => {
+    data.favorites = data.favorites.filter(value => value.id !== req.body.id);
+    data.save().then(doc => res.json(req.body.id));
+  });
 });
 
 module.exports = router;
