@@ -63,14 +63,16 @@ router.post("/login", (req, res) => {
 });
 
 router.put("/addfavorite", auth, (req, res) => {
-  ImageUser.findById(req.user.id, (err, data) => {
+  ImageUser.findById(req.user.id, (_err, data) => {
     data.favorites = [req.body, ...data.favorites];
     data.save().then(doc => res.json(req.body.id));
   });
 });
 
-router.get("/profile", auth, (req, res) => {
-  res.json({ user: req.user });
+router.get("/getfavorites", auth, (req, res) => {
+  ImageUser.findById(req.user.id, (err, data) => {
+    res.json(data.favorites);
+  });
 });
 
 router.put("/removefavorite", auth, (req, res) => {
