@@ -82,4 +82,12 @@ router.put("/removefavorite", auth, (req, res) => {
   });
 });
 
+router.delete("/removeuser", auth, (req, res) => {
+  ImageUser.deleteOne({ _id: req.user.id }, err => {
+    err
+      ? res.json({ msg: "Something went wrong" })
+      : res.json({ msg: "Accounted successfully removed!" });
+  });
+});
+
 module.exports = router;

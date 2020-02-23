@@ -4,14 +4,15 @@ const router = require("express").Router();
 const Axios = require("axios");
 const Unsplash = require("unsplash-js").default;
 const toJson = require("unsplash-js").toJson;
+const config = require("config");
 
 const unsplash = new Unsplash({
-  accessKey: "43a34599b87ce29fc3d8d6a31114faa1f3f36673ead3e8a6e801e0c0e1bdd33b",
-  secret: "15578c77d0daa73bc5568f90ecbcaa279b5821fd229db90439dca21063efae94"
+  accessKey: config.get("unsplash_accessKey"),
+  secret: config.get("unsplash_secret")
 });
 
 router.get("/pixabay/", (req, res) => {
-  const key = "14838845-97aff471166809fe19bd2c3a9";
+  const key = config.get("pixabay_key");
   Axios.get(
     `https://pixabay.com/api/?key=${key}&q=${req.query.q}&image_type=photo&per_page=${req.query.hits}&page=${req.query.page}`
   )
@@ -63,7 +64,7 @@ router.get("/unsplash/", (req, res) => {
 });
 
 router.get("/pexels/", (req, res) => {
-  const key = "563492ad6f91700001000001a9f0594f242f471d818ad306d874f5a7";
+  const key = config.get("pexels_key");
   const url = req.query.q.trim().length
     ? `https://api.pexels.com/v1/search?query=${req.query.q}&per_page=${req.query.hits}&page=${req.query.page}`
     : `https://api.pexels.com/v1/curated?per_page=${req.query.hits}&page=${req.query.page}`;
@@ -89,7 +90,7 @@ router.get("/pexels/", (req, res) => {
 });
 
 router.get("/giphy/", (req, res) => {
-  const key = "pJBwpveOGoFTbTPQe44xXkOghR8LACjC";
+  const key = config.get("giphy_key");
   let params = req.query.q.trim().length
     ? `/search?api_key=${key}&q=${req.query.q}&limit=${
         req.query.hits

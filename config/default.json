@@ -1,4 +1,9 @@
 {
   "jwt_key": "jwt_private_key",
-  "atlas_key": "mongodb+srv://nandankmr:sherlock@cluster0-bnrcv.mongodb.net/test?retryWrites=true&w=majority"
+  "atlas_key": "mongodb+srv://nandankmr:sherlock@cluster0-bnrcv.mongodb.net/test?retryWrites=true&w=majority",
+  "unsplash_accessKey": "43a34599b87ce29fc3d8d6a31114faa1f3f36673ead3e8a6e801e0c0e1bdd33b",
+  "unsplash_secret": "15578c77d0daa73bc5568f90ecbcaa279b5821fd229db90439dca21063efae94",
+  "pixabay_key": "14838845-97aff471166809fe19bd2c3a9",
+  "pexels_key": "563492ad6f91700001000001a9f0594f242f471d818ad306d874f5a7",
+  "giphy_key": "pJBwpveOGoFTbTPQe44xXkOghR8LACjC"
 }
