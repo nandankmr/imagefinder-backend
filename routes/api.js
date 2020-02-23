@@ -33,7 +33,7 @@ router.get("/unsplash/", (req, res) => {
             r.results.map(result => {
               return {
                 id: result.id,
-                webformatURL: result.urls.thumb,
+                webformatURL: result.urls.small,
                 largeImageURL: result.urls.regular,
                 tags: result.tags.map(tag => tag.title).join(", "),
                 user: result.user.username
@@ -43,17 +43,18 @@ router.get("/unsplash/", (req, res) => {
         )
         .catch(err => console.log(err))
     : unsplash.photos
-        .listPhotos(1, req.query.hits)
+        .listPhotos(req.query.page, req.query.hits)
         .then(toJson)
         .then(r =>
           res.json(
             r.map(result => {
               return {
                 id: result.id,
-                webformatURL: result.urls.thumb,
+                webformatURL: result.urls.small,
                 largeImageURL: result.urls.regular,
                 tags: result.alt_description,
-                user: result.user.username
+                user: result.user.username,
+                allImage: result.urls
               };
             })
           )
@@ -64,8 +65,8 @@ router.get("/unsplash/", (req, res) => {
 router.get("/pexels/", (req, res) => {
   const key = "563492ad6f91700001000001a9f0594f242f471d818ad306d874f5a7";
   const url = req.query.q.trim().length
-    ? `https://api.pexels.com/v1/search?query=${req.query.q}&per_page=${req.query.hits}&page=1`
-    : `https://api.pexels.com/v1/curated?per_page=${req.query.hits}&page=1`;
+    ? `https://api.pexels.com/v1/search?query=${req.query.q}&per_page=${req.query.hits}&page=${req.query.page}`
+    : `https://api.pexels.com/v1/curated?per_page=${req.query.hits}&page=${req.query.page}`;
   Axios.get(url, {
     headers: {
       Authorization: key
@@ -92,9 +93,11 @@ router.get("/giphy/", (req, res) => {
   let params = req.query.q.trim().length
     ? `/search?api_key=${key}&q=${req.query.q}&limit=${
         req.query.hits
-      }&offset=${req.query.page - 1}`
-    : `/trending?api_key=${key}&limit=${req.query.hits}&offset=${req.query
-        .page - 1}`;
+      }&offset=${(req.query.page - 1) * req.query.hits}`
+    : `/trending?api_key=${key}&limit=${req.query.hits}&offset=${(req.query
+        .page -
+        1) *
+        req.query.hits}`;
 
   Axios.get(`https://api.giphy.com/v1/gifs${params}`)
     .then(r =>
