@@ -37,7 +37,8 @@ router.get("/unsplash/", (req, res) => {
                 webformatURL: result.urls.small,
                 largeImageURL: result.urls.regular,
                 tags: result.tags.map(tag => tag.title).join(", "),
-                user: result.user.username
+                user: result.user.username,
+                allImage: result.urls
               };
             })
           )
@@ -60,7 +61,7 @@ router.get("/unsplash/", (req, res) => {
             })
           )
         )
-        .catch(err => console.log(err));
+        .catch(console.log);
 });
 
 router.get("/pexels/", (req, res) => {
@@ -81,7 +82,8 @@ router.get("/pexels/", (req, res) => {
             webformatURL: photo.src.medium,
             largeImageURL: photo.src.large2x,
             tags: "",
-            user: photo.photographer
+            user: photo.photographer,
+            original: photo.src
           };
         })
       )
