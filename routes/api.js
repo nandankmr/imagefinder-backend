@@ -38,7 +38,7 @@ router.get("/unsplash/", (req, res) => {
                 largeImageURL: result.urls.regular,
                 tags: result.tags.map(tag => tag.title).join(", "),
                 user: result.user.username,
-                allImage: result.urls
+                download: result.urls.full
               };
             })
           )
@@ -56,7 +56,7 @@ router.get("/unsplash/", (req, res) => {
                 largeImageURL: result.urls.regular,
                 tags: result.alt_description,
                 user: result.user.username,
-                allImage: result.urls
+                download: result.urls.full
               };
             })
           )
@@ -83,7 +83,7 @@ router.get("/pexels/", (req, res) => {
             largeImageURL: photo.src.large2x,
             tags: "",
             user: photo.photographer,
-            original: photo.src
+            download: photo.src.original
           };
         })
       )
