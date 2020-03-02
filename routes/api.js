@@ -7,12 +7,12 @@ const toJson = require("unsplash-js").toJson;
 const config = require("config");
 
 const unsplash = new Unsplash({
-  accessKey: config.get("unsplash_accessKey"),
-  secret: config.get("unsplash_secret")
+  accessKey: process.env.UNSPLASH_ACCESSKEY || config.get("unsplash_accessKey"),
+  secret: process.env.UNSPLASH_SECRET || config.get("unsplash_secret")
 });
 
 router.get("/pixabay/", (req, res) => {
-  const key = config.get("pixabay_key");
+  const key = process.env.PIXABAY_KEY || config.get("pixabay_key");
   Axios.get(
     `https://pixabay.com/api/?key=${key}&q=${req.query.q}&image_type=photo&per_page=${req.query.hits}&page=${req.query.page}`
   )
@@ -65,7 +65,7 @@ router.get("/unsplash/", (req, res) => {
 });
 
 router.get("/pexels/", (req, res) => {
-  const key = config.get("pexels_key");
+  const key = process.env.PEXELS_KEY || config.get("pexels_key");
   const url = req.query.q.trim().length
     ? `https://api.pexels.com/v1/search?query=${req.query.q}&per_page=${req.query.hits}&page=${req.query.page}`
     : `https://api.pexels.com/v1/curated?per_page=${req.query.hits}&page=${req.query.page}`;
@@ -92,7 +92,7 @@ router.get("/pexels/", (req, res) => {
 });
 
 router.get("/giphy/", (req, res) => {
-  const key = config.get("giphy_key");
+  const key = process.env.GIPHY_KEY || config.get("giphy_key");
   let params = req.query.q.trim().length
     ? `/search?api_key=${key}&q=${req.query.q}&limit=${
         req.query.hits

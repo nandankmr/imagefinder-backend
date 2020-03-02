@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/lab": "^4.0.0-alpha.45",
     "axios": "^0.19.2",
     "bcryptjs": "^2.4.3",
     "concurrently": "^5.0.2",
