@@ -17,7 +17,6 @@ router.get("/pixabay/", (req, res) => {
     `https://pixabay.com/api/?key=${key}&q=${req.query.q}&image_type=photo&per_page=${req.query.hits}&page=${req.query.page}`
   )
     .then(r => {
-      console.log(process.env.PIXABAY_KEY);
       res.json(r.data.hits);
     })
     .catch(err => {
