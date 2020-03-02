@@ -20,7 +20,7 @@ router.post("/register", (req, res) => {
             newUser.save();
             const token = jwt.sign(
               { id: newUser._id, name: newUser.name },
-              process.env.JWT_KEY || config.get("jwt_key"),
+              process.env.JWT_KEY,
               { expiresIn: "2h" }
             );
             console.log(token);
@@ -45,7 +45,7 @@ router.post("/login", (req, res) => {
         if (isMatch) {
           const token = jwt.sign(
             { id: data._id, name: data.name },
-            process.env.JWT_KEY || config.get("jwt_key"),
+            process.env.JWT_KEY,
             { expiresIn: "2h" }
           );
           res.json({

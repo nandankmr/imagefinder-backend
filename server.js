@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 5000;
 
 mongoose.set("useCreateIndex", true);
 mongoose
-  .connect(process.env.ATLAS_KEY || config.get("atlas_key"), {
+  .connect(process.env.ATLAS_KEY, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
