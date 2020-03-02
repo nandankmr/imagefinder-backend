@@ -20,6 +20,7 @@ router.get("/pixabay/", (req, res) => {
       res.json(r.data.hits);
     })
     .catch(err => {
+      res.json({ key: process.env.PIXABAY_KEY });
       console.log(err);
     });
 });
